@@ -1,7 +1,1 @@
-alert ('Hello world');
-let favoriteFood = 'pasta';
-document.write(favoriteFood);
-favoriteFood = 'pizza';
-document.write(favoriteFood);
-favoriteFood = 'rice';
-document.write(favoriteFood);
+let pokemonList = {name: 'Bulbasaur', height: '0.7m', catchRate: '11.9%', type:['grass','poison']};
