@@ -26,7 +26,23 @@ let pokemonList = [
     weight:'60 kg',
     abilities: 'Levitate',
     type:['psychic','dragon']
-  },
+  }
 ];
-//accessing name property
-console.log(pokemonList);
+
+// (1 === 2); // reads as "is 1 equal to 2?"
+// (1 !== 2); // reads as "is 1 not equal to 2?"
+// (1 < 2); // reads as "is 1 less than 2?"
+// (1 > 2); // reads as "is 1 greater than 2?"
+// (1 <= 2); // reads as "is 1 less than or equal to 2?"
+// (1 >= 2);  reads as "is 1 greater than or equal to 2?"
+
+/* A for loop that iterates over each item in PokemonList*/
+for (i = 0; i < pokemonList.lenght; i++){
+  if (pokemonList[i].height > 7) {
+    document.write(pokemonList[i].height + pokemonList[i].name + "Wow, that’s big!");
+  } else if (pokemonList[i].height <= 2) {
+    document.write("That's a small pokemon!");
+  } else {
+    document.write("unclassified");
+  }
+}
