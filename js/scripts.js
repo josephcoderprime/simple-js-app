@@ -46,4 +46,3 @@ let i = 0; i < pokemonList.lenght; i++ {
     document.write("unclassified");
   }
 }
-
