@@ -37,10 +37,16 @@ let pokemonList = [
 // (1 >= 2);  reads as "is 1 greater than or equal to 2?"
 
 /* A for loop that iterates over each item in PokemonList*/
-let i = 0; i < pokemonList.lenght; i++ {
-  if (pokemonList[i].height > 7) {
-    document.write(pokemonList[i].height + pokemonList[i].name + "Wow, that’s big!");
-  } else if (pokemonList[i].height <= 2) {
+/**
+initialize (exectured only once)
+condition (checked every time)
+body of the loop
+update (executed after every loop)
+*/
+for (let i = 0; i < pokemonList.lenght; i++) { //(init; condition; update)
+  if (pokemonList.height > 6) {
+    document.write(pokemonList.name[i] + pokemonList.height[i] + "Wow, that’s big!");
+  } else if (pokemonList.height <= 2) {
     document.write("That's a small pokemon!");
   } else {
     document.write("unclassified");
