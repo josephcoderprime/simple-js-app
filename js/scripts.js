@@ -44,9 +44,9 @@ body of the loop
 update (executed after every loop)
 */
 for (let i = 0; i < pokemonList.lenght; i++) { //(init; condition; update)
-  if (pokemonList.height > 6) {
-    document.write(pokemonList.name[i] + pokemonList.height[i] + "Wow, that’s big!");
-  } else if (pokemonList.height <= 2) {
+  if (pokemonList[i].height >= 7) {
+    document.write(pokemonList[i].name + ' , ' + pokemonList[i].height + ' , ' + 'Wow, that’s big!')
+  } else if (pokemonList[i].height < 5) {
     document.write("That's a small pokemon!");
   } else {
     document.write("unclassified");
