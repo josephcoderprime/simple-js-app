@@ -26,7 +26,7 @@ let pokemonList = [
     weight:'60 kg',
     abilities: 'Levitate',
     type:['psychic','dragon']
-  }
+  },
 ];
 
 // (1 === 2); // reads as "is 1 equal to 2?"
@@ -43,12 +43,12 @@ condition (checked every time)
 body of the loop
 update (executed after every loop)
 */
-for (let i = 0; i < pokemonList.lenght; i++) { //(init; condition; update)
+for (let i = 0; i < pokemonList.length; i++) { //(init; condition; update)
   if (pokemonList[i].height >= 7) {
-    document.write(pokemonList[i].name + ' , ' + pokemonList[i].height + ' , ' + 'Wow, that’s big!');
+    document.write("<p>" + pokemonList[i].name + ' , ' + pokemonList[i].height + ' , ' + 'Wow, that’s big!' + "</p>");
   } else if (pokemonList[i].height < 5) {
     document.write("That's a small pokemon!");
   } else {
-    document.write("unclassified");
+    document.write("That's a very small pokemon");
   }
 }
