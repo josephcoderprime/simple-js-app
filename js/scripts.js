@@ -26,29 +26,37 @@ let pokemonList = [
     weight:'60 kg',
     abilities: 'Levitate',
     type:['psychic','dragon']
-  },
+  }
 ];
 
-// (1 === 2); // reads as "is 1 equal to 2?"
-// (1 !== 2); // reads as "is 1 not equal to 2?"
-// (1 < 2); // reads as "is 1 less than 2?"
-// (1 > 2); // reads as "is 1 greater than 2?"
-// (1 <= 2); // reads as "is 1 less than or equal to 2?"
-// (1 >= 2);  reads as "is 1 greater than or equal to 2?"
-
-/* A for loop that iterates over each item in PokemonList*/
-/**
-initialize (exectured only once)
-condition (checked every time)
-body of the loop
-update (executed after every loop)
+/**FOR EACH LOOP: In each iteration the variable name
+will hold the value of an element inside the ArrayList/Array,
+starting from the first element.
 */
-for (let i = 0; i < pokemonList.length; i++) { //(init; condition; update)
-  if (pokemonList[i].height >= 7) {
-    document.write("<p>" + pokemonList[i].name + ' , ' + pokemonList[i].height + ' , ' + 'Wow, that’s big!' + "</p>");
-  } else if (pokemonList[i].height < 5) {
-    document.write("That's a small pokemon!");
-  } else {
-    document.write("That's a very small pokemon");
-  }
+
+pokemonList.forEach(function(pokemonList){
+  document.write(pokemonList.name + "<br>")
+  document.write(pokemonList.height + "<br>")
+  document.write(pokemonList.weight + "<br>")
+  document.write(pokemonList.abilities + "<br>")
+  document.write(pokemonList.type + "<br><br>")
+});
+
+/**Basic Function
+function hello(){
+  console.log('hi')
 }
+hello()
+*/
+
+//IIFE - Immediately Invoked Function Expression pokemonRepository
+let pokemonRepository = (function () {
+  return {
+    add: function(pokemon) {
+      pokemonList.push(pokemon);
+    },
+    getAll: function() {
+      return pokemonList;
+    }
+  };
+})();
