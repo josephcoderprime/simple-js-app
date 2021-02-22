@@ -51,12 +51,20 @@ hello()
 
 //IIFE - Immediately Invoked Function Expression pokemonRepository
 let pokemonRepository = (function () {
+  let pokemonList = [];
+  
+  function add(pokemon) {
+    pokemonList.push(pokemon);
+  }
+  function getAll() {
+    return pokemonList;
+  }
+  
   return {
-    add: function(pokemon) {
-      pokemonList.push(pokemon);
-    },
-    getAll: function() {
-      return pokemonList;
-    }
+    add: add,
+    getAll: getAll
   };
 })();
+
+pokemonRepository.add({name: 'Blastoise', height: 1.6, type:['Water'] });
+console.log(pokemonRepository.getAll());
