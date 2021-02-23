@@ -51,7 +51,6 @@ hello()
 
 //IIFE - Immediately Invoked Function Expression pokemonRepository
 let pokemonRepository = (function () {
-  let pokemonList = [];
   
   function add(pokemon) {
     pokemonList.push(pokemon);
@@ -59,7 +58,7 @@ let pokemonRepository = (function () {
   function getAll() {
     return pokemonList;
   }
-  
+
   return {
     add: add,
     getAll: getAll
