@@ -106,66 +106,7 @@ let pokemonRepository = (function () {
       console.error(e);
     })
   }
-  // A validation email function
-  function validateEmail() {
-    let value = emailInput.value;
 
-    if (!value) {
-      showErrorMessage(emailInput, 'Email is a required field.');
-      return false;
-    }
-
-    if (value.indexOf('@') === -1) {
-      showErrorMessage(emailInput, 'You must enter a valid email address.');
-      return false;
-    }
-
-    showErrorMessage(emailInput, null);
-    return true;
-  }
-
-  // A validation password function
-  function validatePassword() {
-    let value = passwordInput.value;
-
-    if (!value) {
-      showErrorMessage(passwordInput, 'Password is a required field.')
-      return false;
-    }
-
-    if (value.length < 8) {
-      showErrorMessage(passwordInput, 'The password needs to be at least 8 characters long.');
-      return false;
-    }
-
-    showErrorMessage(passwordInput,null);
-    return true;
-
-  }
-  // A show error function
-  function showErrorMessage(input,message) {
-    let container = input.parentElement;
-    let error = container.querySelector('.error-message');
-    if (error) {
-      container.removeChild(error);
-    }
-    if (message) {
-      let error = document.createElement('div');
-      error.classList.add('error-message');
-      error.ineerText = message;
-      container.appendChild(error);
-    }
-  }
-
-  function validateForm() {
-    return validateEmail() && validatePassword();
-  }
-
-  function validateForm() {
-    let isValidEmail = validateEmail();
-    return isValidPassword = validatePassword();
-    return isValidEmail && isValidPassword;
-  }
   //Load the 150 pokemon from the pokeapi list
   function loadDetails(item) {
     let url = item.detailsUrl;
@@ -180,41 +121,38 @@ let pokemonRepository = (function () {
     });
   }
 
-  // Modal
   let pokemonRepository = (function() {
-    let modalContainer = document.querySelector('#modal-caontainer'); //The function has a variable called modalContainer and with its querySelector will select the ('id') in the index
-    function showModal(title, text) { //Function called showModal with 2 parameters between the parenthesis (title,text)
-      modalContainer.innerHTML = ''; //This will clear what's inside the container
-      let modal = document.createElement('div'); //The model will create an Element which is div
-      modal.classList.add('modal'); //After the modal is created, the classList named 'modal' will be added.
-    }
+  let modalContainer = document.querySelector('#modal-container');
+  function showModal(title, text) {
+    modalContainer.innerHTML = '';
+    let modal = document.createElement('div');
+    modal.classList.add('modal');
 
-    let closeButtonElement = document.createElement('button'); //Creats an element called button
-    closeButtonElement.classList.add('modal-close'); //added the class called modal-close
-    closeButtonElement.innerText = 'Close'; //The innerText inside the button close
-    closeButtonElement.addEventListener('click', hideModal); //This code will listen to a click, and once it's activate it will activate hideModal
-    let titleElement = document.createElement('h1'); //Creates a title elemnt
+    let closeButtonElement = document.createElement('button');
+    closeButtonElement.classList.add('modal-close');
+    closeButtonElement.innerText = 'Close';
+    closeButtonElement.addEventListener('click', hideModal);
+
+    let titleElement = document.createElement('h1');
     titleElement.innerText = title;
 
-    let contentElement = document.createElement('p'); //Creates the paragrhap element
+    let contentElement = document.createElement('p');
     contentElement.innerText = text;
-
-    let pokemonImage = document.createElement('img');
-    pokemonImage.src = pokemon.imageUrl;
-
 
     modal.appendChild(closeButtonElement);
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
-    modal.appendChild(pokemonImage);
     modalContainer.appendChild(modal);
 
-    modalContainer.classList.add('is-visible'); //When the class is visible, it will show the model
+
+    modalContainer.classList.add('is-visible');
   }
-  let dialogPromiseReject;
+
+  let dialogPromiseReject; // This can be set later, by showDialog
 
   function hideModal() {
-    modalContainer.classList.remove('is-visible'); //When the function is called it will select this code to close the modal
+    let modalContainer = document.querySelector('#modal-container');
+    modalContainer.classList.remove('is-visible');
 
     if (dialogPromiseReject) {
       dialogPromiseReject();
@@ -223,68 +161,63 @@ let pokemonRepository = (function () {
   }
 
   function showDialog(title, text) {
-    showModal(title, text);
+  showModal(title, text);
 
-    let modal = modalContainer.querySelector('.modal');
-    let confirmButton = document.createElement('button');
-    confirmButton.classList.add('modal-confirm');
-    confirmButton.innerText = 'Confirm';
+  // We want to add a confirm and cancel button to the modal
+  let modal = modalContainer.querySelector('.modal');
 
-    let cancelButton = document.createElement('button');
-    cancelButton.classList.add('modal-cancel');
-    cancelButton.innerText = 'Cancel';
+  let confirmButton = document.createElement('button');
+  confirmButton.classList.add('modal-confirm');
+  confirmButton.innerText = 'Confirm';
 
-    modal.appendChild(confirmButton);
-    modal.appendChild(cancelButton);
+  let cancelButton = document.createElement('button');
+  cancelButton.classList.add('modal-cancel');
+  cancelButton.innerText = 'Cancel';
 
-    // We want to focus the confirmButton so that the user can simply press Enter
-    confirmButton.focus();
-    return new Promise((resolve, reject) => {
-      cancelButton.addEventListener('click', hideModal);
-      cancelButton.addEventListener('click', () => {
-        dialogPromiseReject = null;
-        hideModal();
-        reject();
-      });
+  modal.appendChild(confirmButton);
+  modal.appendChild(cancelButton);
 
-      dialogPromiseReject = reject;
-    });
-  }
-  document.querySelector('#show-dialog').addEventListener('click' () => {
-    showDialog('confirm action', 'Are you sure you want to do this?').then(function() {
-      alert('confirmed!');
-    }, () => {
-      alert('not confirmed');
-    });
+  // We want to focus the confirmButton so that the user can simply press Enter
+  confirmButton.focus();
+  return new Promise((resolve, reject) => {
+  cancelButton.addEventListener('click', hideModal);
+  confirmButton.addEventListener('click', () => {
+    dialogPromiseReject = null; // Reset this
+    hideModal();
+    resolve();
   });
+  // This can be used to reject from other functions
+  dialogPromiseReject = reject;
+});
+}
+
+document.querySelector('#show-dialog').addEventListener('click', () => {
+  showDialog('Confirm action', 'Are you sure you want to do this?').then(function() {
+    alert('confirmed!');
+  }, () => {
+    alert('not confirmed');
+  });
+});
 
   window.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
       hideModal();
     }
   });
-
-modalContainer.addEventListener('click', (e) => {
-  let target = e.target;
-  if (target === modalContainer) {
-    hideModal();
-  }
-});
-
-document.querySelector('#show-modal').addEventListener('click', () => {
-  showModal('Modal title', 'This is the modal content!');
-});
-
-document.querySelector('#showDialog').addEventListener('click', () => {
-  showDialog('confirm action', 'Are you sure you want to do this?');
-});
-})();
-
-    if (dialogPromiseReject) {
-      dialogPromiseReject();
-      dialogPromiseReject = null;
+  modalContainer.addEventListener('click', (e) => {
+    // Since this is also triggered when clicking INSIDE the modal
+    // We only want to close if the user clicks directly on the overlay
+    let target = e.target;
+    if (target === modalContainer) {
+      hideModal();
     }
+  });
 
+  document.querySelector('#show-modal').addEventListener('click', () => {
+    showModal('Modal title', 'This is the modal content!');
+  });
+
+})();
 
 return {
   add: add,
@@ -295,14 +228,12 @@ return {
   showModal: showModal,
   hideModal: hideModal
 };
-})();
 
-emailInput.addEventListener('input' validateEmail);
-passwordInput.addEventListener('input', validatePassword);
+})();
 
 //pokemonRepository.add({name: 'Blastoise', height: 1.6, type:['Water']}
 pokemonRepository.loadlist().then(function() {
-  pokemonRepository.getAll().forEach(function(poke_mon){
+  pokemonRepository.getAll().forEach(function(poke_mon) {
     pokemonRepository.addListItem(poke_mon);
   });
 });
