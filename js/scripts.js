@@ -174,15 +174,6 @@ let pokemonRepository = (function () {
         showModal(poke_mon); //from here the showModal will go directly to his function
       });
 
-      modalContainer.addEventListener('click', (e) => {
-      // Since this is also triggered when clicking INSIDE the modal
-      // We only want to close if the user clicks directly on the overlay
-      let target = e.target;
-      if (target === modalContainer) {
-        hideModal();
-      }
-    });
-
 
       return {
         add: add,
