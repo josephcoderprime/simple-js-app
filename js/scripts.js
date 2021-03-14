@@ -2,7 +2,7 @@
 let pokemonRepository = (function () {
   let poke_mon = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
-  let modalContainer = document.querySelector('#modalContainer'); //It has a variable called modalContainer and it has a querySelector, which will selct the id in the index.html.
+  let modalContainer = document.querySelector('#modal-container'); //It has a variable called modalContainer and it has a querySelector, which will selct the id in the index.html.
  //By being outside the function i'ts classified as a Global variable. So this means that all the function will have acess to the variable.
 
   //This function is to add a pokemon.
@@ -17,12 +17,11 @@ let pokemonRepository = (function () {
   // This function scope is to release all the details on the console.
   function showDetails (poke_mon) {
     loadDetails(poke_mon).then(function () {
-      showModal(poke_mon.name, poke_mon.height);
+      showModal(poke_mon);
 
     });
 
   }
-
 
   //promise function
     function loadlist(){
@@ -67,7 +66,7 @@ let pokemonRepository = (function () {
         button.innerText = poke_mon.name;
         button.classList.add("button-class");
         button.classList.add("button_1");
-        listpokemon.appendChild(button); /*The appendChild() method appends a node as the last child of a node.*/
+        listpokemon.appendChild(button); //The appendChild() method appends a node as the last child of a node.
         pokemonList.appendChild(listpokemon);
         listpokemon.appendChild(button_1);
         button.addEventListener('click',function(event) {
@@ -86,17 +85,17 @@ let pokemonRepository = (function () {
 
         let closeButtonElement = document.createElement('button');
         closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'close';
-        clsoseButtonElement.addEventListener('click', hideModal);
+        closeButtonElement.innerText = 'x';
+        closeButtonElement.addEventListener('click', hideModal);
 
         let titleElement = document.createElement('h1');
         titleElement.innerText = poke_mon.name;
 
         let contentElement = document.createElement('p');
-        contentElement.innerText = 'height: ' + poke_mon.height;
+        contentElement.innerText = 'Height: ' + poke_mon.height;
 
         let pokemonImage = document.createElement('img');
-        pokemonImage.src = pokemon.imageUrl;
+        pokemonImage.src = poke_mon.imageUrl;
         pokemonImage.style.height = "200px";
 
         modal.appendChild(closeButtonElement); //the modal will append a child which in this case is going to be the (closeButtonElement)
@@ -122,7 +121,7 @@ let pokemonRepository = (function () {
       }
 
       function showDialog(title, text) {
-        showModal(poke_mon.name, poke_mon.height);
+        showModal(poke_mon);
 
         // We want to add a confirm and cancel button to the modal
         let modal = modalContainer.querySelector('.modal');
@@ -173,6 +172,15 @@ let pokemonRepository = (function () {
       document.querySelector('#show-modal').addEventListener('click', () => {
         showModal(poke_mon); //from here the showModal will go directly to his function
       });
+
+      modalContainer.addEventListener('click', (e) => {
+      // Since this is also triggered when clicking INSIDE the modal
+      // We only want to close if the user clicks directly on the overlay
+      let target = e.target;
+      if (target === modalContainer) {
+        hideModal();
+      }
+    });
 
 
       return {
