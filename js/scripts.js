@@ -1,7 +1,7 @@
 //IIFE - Immediately Invoked Function Expression pokemonRepository - With this method it will allow me to access it with the other functions.
 let pokemonRepository = (function () {
   let poke_mon = [];
-  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
+  let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=200';
   let modalContainer = document.querySelector('#modal-container'); //It has a variable called modalContainer and it has a querySelector, which will selct the id in the index.html.
  //By being outside the function i'ts classified as a Global variable. So this means that all the function will have acess to the variable.
 
@@ -61,6 +61,9 @@ let pokemonRepository = (function () {
       function addListItem(poke_mon){
         let pokemonList = document.querySelector(".pokemonList"); // Created a varialbe | querySelector() returns the first element
         let listpokemon = document.createElement("li"); // The document.createElement() accepts an HTML tag name and returns a new Node with the Element type.
+        listItem.classList.add('poke_mon');
+        listItem.classList.add('col-12');
+        listItem.classList.add('col-md-4');
         let button = document.createElement("button"); // Created a button
         let button_1 = document.createElement("button_1");
         button.innerText = poke_mon.name;
@@ -75,38 +78,51 @@ let pokemonRepository = (function () {
         });
       }
       // A function called showModal
-        function showModal(poke_mon) {
-        // Clear all existing modal content
-        modalContainer.innerHTML = '';
-        modalContainer.innerText = poke_mon.name;
+      function showModal(poke_mon) {
+        function showModal(item) {
+          let modalBody = $(".modal-body");
+          let modalTitle = $(".modal-title");
+          let modalHeader = $(".modal-header");
+          let modalId = $("#modal-container");
+          // Clear all existing modal content
+          modalTitle.empty();
+          modalBody.empty();
+          modalId.empty();
 
-        let modal = document.createElement('div'); //The model will create an Element which is 'div'.
-        modal.classList.add('modal'); //After the model is created it will take class called modal.
+          // Create element for pokemon name in modal content
+          let nameElement = $("<h1>" + item.name + "</h1>");
 
-        let closeButtonElement = document.createElement('button');
-        closeButtonElement.classList.add('modal-close');
-        closeButtonElement.innerText = 'x';
-        closeButtonElement.addEventListener('click', hideModal);
+          // Create img for pokemon in modal content
+          let imageElementFront = $('<img class="modal-img" style="width:50%">');
+          imageElementFront.attr("src", item.imageUrlFront);
+          let imageElementBack = $('<img class="modal-img" style="width:50%">');
+          imageElementBack.attr("src", item.imageUrlBack);
 
-        let titleElement = document.createElement('h1');
-        titleElement.innerText = poke_mon.name;
+          // Create element for pokemon height in modal content
+          let heightElement = $("<p>" + "height : " + item.height + "</p>");
 
-        let contentElement = document.createElement('p');
-        contentElement.innerText = 'Height: ' + poke_mon.height;
+          // Create element for pokemon weight in modal content
+          let weightElement = $("<p>" + "weight : " + item.weight + "</p>");
 
-        let pokemonImage = document.createElement('img');
-        pokemonImage.src = poke_mon.imageUrl;
-        pokemonImage.style.height = "200px";
+          // Create element for type in modal content
+          let typesElement = $("<p>" + "types : " + item.types + "</p>");
 
-        modal.appendChild(closeButtonElement); //the modal will append a child which in this case is going to be the (closeButtonElement)
-        modal.appendChild(titleElement);
-        modal.appendChild(contentElement);
-        modal.appendChild(pokemonImage);
-        modalContainer.appendChild(modal);
+          // Create element for abilities in modal content
+          let abilitiesElement = $("<p>" + "abilities : " + item.abilities + "</p>");
 
-        modalContainer.classList.add('is-visible'); //When the calss is visible, it will display the model. Called in Css: display: block;
+          // Append
+          modalTitle.append(nameElement);
+          modalBody.append(imageElementFront);
+          modalBody.append(imageElementBack);
+          modalBody.append(heightElement);
+          modalBody.append(weightElement);
+          modalBody.append(typesElement);
+          modalBody.append(abilitiesElement);
 
-      }
+          modalContainer.classList.add('is-visible'); //When the calss is visible, it will display the model. Called in Css: display: block;
+
+        }
+
 
       // This function will close the Modal
         let dialogPromiseReject;
