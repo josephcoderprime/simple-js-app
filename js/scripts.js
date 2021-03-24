@@ -17,11 +17,21 @@ let pokemonRepository = (function () {
   // This function scope is to release all the details on the console.
   function showDetails (poke_mon) {
     loadDetails(poke_mon).then(function () {
-      showModal(poke_mon);
-
+      let pokeName =  pokemon.name;
+      let pokeHeight = pokemon.height;
+      let pokeImage = pokemon.image;
+      let pokeType = getPokemonTypes(pokemon);
+      constructDetailModal(pokeName, pokeHeight, pokeImage, pokeType)
+      .then(function(result){
+        console.log(result);
+      })
+      .catch(function(result){
+        // code to run upon unsuccessful promise completion
+        console.log(result);
+      })
     });
-
   }
+
 
   //promise function
     function loadlist(){
@@ -45,10 +55,13 @@ let pokemonRepository = (function () {
         let url = item.detailsUrl;
         return fetch(url).then(function (response) {
           return response.json();
-        }).then(function (details) {
+        })
+        .then(function (details) {
           item.imageUrl = details.sprites.front_default;
+          item.weight = details.weight;
           item.height = details.height;
           item.types = details.types;
+          item.abilities = details.abilities;
         }).catch(function (e) {
           console.error(e);
         });
@@ -61,56 +74,59 @@ let pokemonRepository = (function () {
       function addListItem(poke_mon){
         let pokemonList = document.querySelector(".pokemonList"); // Created a varialbe | querySelector() returns the first element
         let listpokemon = document.createElement("li"); // The document.createElement() accepts an HTML tag name and returns a new Node with the Element type.
-        listItem.classList.add('poke_mon');
-        listItem.classList.add('col-12');
-        listItem.classList.add('col-md-4');
         let button = document.createElement("button"); // Created a button
         let button_1 = document.createElement("button_1");
         button.innerText = poke_mon.name;
+        button.classList.add("text-capitalize");
+        button.classList.add("btn");
+        button.classList.add("btn-primary");
         button.classList.add("button-class");
         button.classList.add("button_1");
+        button.setAttribute("data-toggle", "modal");
+        button.setAttribute("type", "button");
+        button.setAttribute("data-bs-target", "#modal-container");
         listpokemon.appendChild(button); //The appendChild() method appends a node as the last child of a node.
-        pokemonList.appendChild(listpokemon);
         listpokemon.appendChild(button_1);
-        button.addEventListener('click',function(event) {
+      }
+      function addClickEvent(button, poke_mon){
+        button.addEventListener('click',function() {
           showDetails(poke_mon);
 
-        });
+        })
       }
       // A function called showModal
       function showModal(poke_mon) {
-        function showModal(item) {
           let modalBody = $(".modal-body");
-          let modalTitle = $(".modal-title");
           let modalHeader = $(".modal-header");
           let modalId = $("#modal-container");
+          let modalTitle = document.querySelector(".modalTitle");
+          modalTitle.innerText = poke_mon.name;
+          let modal = document.querySelector(".modalBody");
+          modal.innerHTML = " ";
           // Clear all existing modal content
-          modalTitle.empty();
-          modalBody.empty();
           modalId.empty();
 
           // Create element for pokemon name in modal content
-          let nameElement = $("<h1>" + item.name + "</h1>");
-
+          let nameElement = $("<h1>" + poke_mon.name + "</h1>");
           // Create img for pokemon in modal content
           let imageElementFront = $('<img class="modal-img" style="width:50%">');
-          imageElementFront.attr("src", item.imageUrlFront);
+          imageElementFront.setAttribute("src", poke_mon.imageUrlFront);
           let imageElementBack = $('<img class="modal-img" style="width:50%">');
-          imageElementBack.attr("src", item.imageUrlBack);
-
+          imageElementBack.setAttribute("src", poke_mon.imageUrlBack);
+          listItem.classList.add('poke_mon');
+          listItem.classList.add('col-12');
+          listItem.classList.add('col-md-4');
           // Create element for pokemon height in modal content
-          let heightElement = $("<p>" + "height : " + item.height + "</p>");
-
+          let heightElement = $("<p>" + "height : " + poke_mon.height + "</p>");
           // Create element for pokemon weight in modal content
-          let weightElement = $("<p>" + "weight : " + item.weight + "</p>");
-
+          let weightElement = $("<p>" + "weight : " + poke_mon.weight + "</p>");
           // Create element for type in modal content
-          let typesElement = $("<p>" + "types : " + item.types + "</p>");
-
+          let typesElement = $("<p>" + "types : " + poke_mon.types + "</p>");
           // Create element for abilities in modal content
-          let abilitiesElement = $("<p>" + "abilities : " + item.abilities + "</p>");
+          let abilitiesElement = $("<p>" + "abilities : " + poke_mon.abilities + "</p>");
 
           // Append
+          pokemonList.appendChild(listpokemon);
           modalTitle.append(nameElement);
           modalBody.append(imageElementFront);
           modalBody.append(imageElementBack);
@@ -123,59 +139,6 @@ let pokemonRepository = (function () {
 
         }
 
-
-      // This function will close the Modal
-        let dialogPromiseReject;
-        function hideModal() {
-        let modalContainer = document.querySelector('#modal-container');
-        modalContainer.classList.remove('is-visible');
-
-        if (dialogPromiseReject) {
-          dialogPromiseReject();
-          dialogPromiseReject = null
-        }
-      }
-
-      function showDialog(title, text) {
-        showModal(poke_mon);
-
-        // We want to add a confirm and cancel button to the modal
-        let modal = modalContainer.querySelector('.modal');
-
-        let confirmButton = document.createElement('button');
-        confirmButton.classList.add('modal-confirm');
-        confirmButton.innerText = 'Confirm';
-        closeButtonElement.addEventListener('click', hideModal);
-
-        let cancelButton = document.createElement('button');
-        cancelButton.classList.add('modal-cancel');
-        cancelButton.innerText = 'Cancel';
-
-        modal.appendChild(confirmButton);
-        modal.appendChild(cancelButton);
-
-        // We want to focus the confirmButton so that the user can simply press Enter
-        confirmButton.focus();
-        return new Promise((resolve, reject) => {
-          cancelButton.addEventListener('click', hideModal);
-          confirmButton.addEventListener('click', () => {
-            dialogPromiseReject = null;
-            hideModal();
-            resolve();
-          });
-          dialogPromiseReject = reject;
-        });
-      }
-
-
-      document.querySelector('#show-dialog').addEventListener('click', () => {
-        showDialog('Confirm action', 'Are you sure you want to do this?').then(function() {
-          alert('confirmed!');
-        }, () => {
-          alert('not confirmed');
-        });
-      });
-
       // The Esc-Key
       window.addEventListener('keydown', (e) => { //This predefined addEventListener will take the key down
 
@@ -185,20 +148,6 @@ let pokemonRepository = (function () {
       });
 
 
-      document.querySelector('#show-modal').addEventListener('click', () => {
-        showModal(poke_mon); //from here the showModal will go directly to his function
-      });
-
-      modalContainer.addEventListener('click', (e) => {
-      // Since this is also triggered when clicking INSIDE the modal
-      // We only want to close if the user clicks directly on the overlay
-      let target = e.target;
-      if (target === modalContainer) {
-        hideModal();
-      }
-    });
-
-
       return {
         add: add,
         getAll: getAll,
@@ -206,7 +155,6 @@ let pokemonRepository = (function () {
         loadlist: loadlist,
         loadDetails: loadDetails,
         showModal: showModal,
-        hideModal: hideModal
       };
 
     })();
