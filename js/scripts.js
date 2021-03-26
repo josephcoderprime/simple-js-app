@@ -1,5 +1,6 @@
 //IIFE - Immediately Invoked Function Expression pokemonRepository - With this method it will allow me to access it with the other functions.
 let pokemonRepository = (function () {
+  const $ = window.$;
   let poke_mon = [];
   let apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=200';
 
@@ -79,7 +80,6 @@ let pokemonRepository = (function () {
       }
 
   //---------------A function called showModal------------------------------
-let  modalContainer = document.querySelector('#exampleModal');
 
       function showModal(poke_mon) {
         let modalBody = $('.modal-body'); //Created a variable: modalBody
@@ -88,6 +88,7 @@ let  modalContainer = document.querySelector('#exampleModal');
         // Clear all existing modal content. By not empty in it, itmay add up everytime the model is open.
         modalTitle.empty();
         modalBody.empty();
+        modalHeader.empty();
 
 //Modal body
 //-------------Creating element for name in the modal content------------------
@@ -126,13 +127,6 @@ let  modalContainer = document.querySelector('#exampleModal');
         modalBody.append(abilitiesElement);
       }
 
-      // modal escape key to hide the modal
-      window.addEventListener('keydown', (e) => {
-        let exampleModal = document.querySelector('#exampleModal');
-        if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
-          hideModal();
-        }
-      });
 
      return {
        add: add,
