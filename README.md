@@ -8,6 +8,6 @@
 <li>APIs, Ajax & Asynchronous Behavior <strong>Done</strong>
 <li>Complex UI Element with JS <strong>Done</strong>
 <li>Introduction to JQuery<strong>Done</strong>
-<li>Bootstrap & UI Libraries
+<li>Bootstrap & UI Libraries <strong>Done</strong>
 <li>Performance & Debugging
 </li>
