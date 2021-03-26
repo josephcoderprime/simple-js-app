@@ -1,5 +1,5 @@
 <h1> Achievement 1 Introduction to JavaScript</h1>
-<ul>
+<li>
 1.What is JavaScript?
 2.JavaScript Basics Part 1
 3.JavaScript Basics Part 2 
@@ -11,4 +11,4 @@
 9.Introduction to JQuery
 10.Bootstrap & UI Libraries
 11.Performance & Debugging
-</ul>
+</li>
