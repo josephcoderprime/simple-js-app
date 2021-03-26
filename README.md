@@ -1,5 +1,5 @@
 <h1> Achievement 1 Introduction to JavaScript</h1>
-<li>What is JavaScript?
+<li>What is JavaScript? <bold>Approved<bold>
 <li>JavaScript Basics Part 1
 <li>JavaScript Basics Part 2 
 <li>JavaScript Functions Part 1 
