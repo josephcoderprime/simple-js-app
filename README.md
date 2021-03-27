@@ -1,4 +1,13 @@
-<h1> Achievement 1 Introduction to JavaScript</h1>
+<h1>Project Description: </h1>
+Using the JavaScript language to build a simple client-side application that can communicate with an external API. 
+
+<h1>Tech Stack:</h1>
+<li>HTML
+  <li>CSS
+    <li>JavaScript
+      </li>
+
+<h1> Achievement 1 Introduction to JavaScript: </h1>
 <li>What is JavaScript? <strong>Done</strong>
 <li>JavaScript Basics Part 1 <strong>Done</strong>
 <li>JavaScript Basics Part 2 <strong>Done</strong>
