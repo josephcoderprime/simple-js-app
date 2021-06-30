@@ -18,5 +18,5 @@ Using the JavaScript language to build a simple client-side application that can
 <li>Complex UI Element with JS <strong>Done</strong>
 <li>Introduction to JQuery<strong>Done</strong>
 <li>Bootstrap & UI Libraries <strong>Done</strong>
-<li>Performance & Debugging
+<li>Performance & Debugging<strong>Done<strong>
 </li>
